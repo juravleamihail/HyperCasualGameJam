@@ -15,7 +15,8 @@ public class IngredientsSpawner : MonoBehaviour
 
     private float[] startingX = {3.5f, -3.5f};
     private float startingY = 3.5f;
-    private float movementSpeed = 0.01f;
+    private float baseMovementSpeed = 1f;
+    private float movementSpeed = 1f;
 
     GameObject newIngredient;
     int randomPositionValue = 0;
@@ -39,6 +40,7 @@ public class IngredientsSpawner : MonoBehaviour
                 Instantiate(requiredIngredients[randomIngredientIndex],
                     new Vector3(startingX[randomPositionValue], startingY, 0.0f), Quaternion.identity);
             minigame.SetIngredient(newIngredient);
+            movementSpeed = baseMovementSpeed * Random.Range(2, 6) * Time.deltaTime;
         }
         else
         {
