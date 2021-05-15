@@ -12,6 +12,7 @@ public class IngredientsSpawner : MonoBehaviour
     [SerializeField] private List<TextMesh> requirementTable;
 
     [SerializeField] private DrinksMinigame minigame;
+    [SerializeField] private List<AudioClip> fruitSounds;
 
     private float[] startingX = {3.5f, -3.5f};
     private float startingY = 3.5f;
@@ -22,9 +23,12 @@ public class IngredientsSpawner : MonoBehaviour
     int randomPositionValue = 0;
     private int lastIndex = -1;
 
+    private AudioSource attachedAudioSource;
+
     private void Start()
     {
         RefreshRequirementTable();
+        attachedAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +70,8 @@ public class IngredientsSpawner : MonoBehaviour
     {
         requirementQuantities[lastIndex] = requirementQuantities[lastIndex] > 0 ? requirementQuantities[lastIndex] - 1 : 0;
         RefreshRequirementTable();
+        attachedAudioSource.clip = fruitSounds[Random.Range(0, fruitSounds.Count)];
+        attachedAudioSource.Play();
         Destroy(newIngredient);
         minigame.SetIngredient(null);
     }
