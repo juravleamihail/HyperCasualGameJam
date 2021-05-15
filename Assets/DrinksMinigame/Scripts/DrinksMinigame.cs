@@ -71,7 +71,6 @@ public class DrinksMinigame : MonoBehaviour
                         inSceneBlender.sprite = blenders[3];
                         break;
                     default:
-                        inSceneBlender.sprite = blenders[0];
                         break;
                 }
             }
