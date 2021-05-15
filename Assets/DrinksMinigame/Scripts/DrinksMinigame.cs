@@ -7,9 +7,11 @@ public class DrinksMinigame : MonoBehaviour
 {
     private float zOffset = 10;
     private GameObject ingredientOnScreen;
+    private int ingredientCounter = 0;
 
-    [SerializeField] private TextMesh tempScore;
-    [SerializeField] private TextMesh tempScore2;
+    [SerializeField] private List<Sprite> blenders;
+    [SerializeField] private SpriteRenderer inSceneBlender;
+    [SerializeField] private IngredientsSpawner ingredientsSpawner;
 
     private void Awake()
     {
@@ -38,25 +40,40 @@ public class DrinksMinigame : MonoBehaviour
                     if (ingredientPosition.y < 4.0f && ingredientPosition.y > 3.0f &&
                         (ingredientPosition.x < 1 && ingredientPosition.x > -1)) //up down green circle & left right green circle
                     {
-                        tempScore.text = "perfect";
+                        //tempScore.text = "perfect";
                         sliced = true;
                     }
                     else
                     {
-                        tempScore.text = "great";
+                        //tempScore.text = "great";
                         sliced = true;
                     }
                 }
                 else
                 {
-                    tempScore.text = "good";
+                    //tempScore.text = "good";
                     sliced = true;
                 }
             }
 
             if (sliced)
             {
-                Destroy(ingredientOnScreen);
+                ingredientsSpawner.CutIngredient();
+                switch (ingredientsSpawner.GetRemainingIngredientCount())
+                {
+                    case 7:
+                        inSceneBlender.sprite = blenders[1];
+                        break;
+                    case 4:
+                        inSceneBlender.sprite = blenders[2];
+                        break;
+                    case 0:
+                        inSceneBlender.sprite = blenders[3];
+                        break;
+                    default:
+                        inSceneBlender.sprite = blenders[0];
+                        break;
+                }
             }
         }
     }
