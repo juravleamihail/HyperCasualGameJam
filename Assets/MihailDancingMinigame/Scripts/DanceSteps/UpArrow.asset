@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: UpArrow
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: edd197048e24fc04aa3fe33387fc88e9, type: 3}
-  animation: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 012a23522bf8f37429faf416816aea82, type: 2}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: LeftArrow
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: b13f5c792dd664e448c0502608fa550a, type: 3}
-  animation: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 166bdb53752e9ff4192f9673ef243fe2, type: 2}

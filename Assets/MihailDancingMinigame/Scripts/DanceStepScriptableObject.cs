@@ -4,5 +4,5 @@ using UnityEngine;
 public class DanceStepScriptableObject : ScriptableObject
 {
     [SerializeField] public Sprite icon;
-    [SerializeField] private Animation animation;
+    public RuntimeAnimatorController animatorController;
 }

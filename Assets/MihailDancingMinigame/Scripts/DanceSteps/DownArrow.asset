@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DownArrow
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 46046a809ba796f4da487c75ccc7c3ed, type: 3}
-  animation: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 13860708cb64b8843af73204bc49987f, type: 2}

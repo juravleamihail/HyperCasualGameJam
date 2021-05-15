@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RightArrow
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 2706f0c4304c57043b261fcffbafe11f, type: 3}
-  animation: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 5b85b2296c01bd44a89582b201598b6d, type: 2}

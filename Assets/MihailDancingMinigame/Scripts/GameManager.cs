@@ -15,6 +15,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     [SerializeField] private Image circlePoint;
     [SerializeField] private Sprite circlePointEmptySprite;
     [SerializeField] private Sprite circlePointFilledSprite;
+    [SerializeField] private Animator dancer;
     private int currentStepIndex = 0;
 
     protected override void Awake()
@@ -60,10 +61,16 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         // Input for PC and mobile
         if(Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         {
-            var a = GetDanceStepAroundTheCirlePoint();
+            Dance(GetDanceStepAroundTheCirlePoint());
             circlePoint.sprite = circlePointFilledSprite;
             StartCoroutine(WaitToChangeCirclePointToDefaultSprite());
         }
+    }
+
+    void Dance(GameObject gameObject)
+    {
+        DanceStepScriptableObject danceStepSORef = gameObject.GetComponent<DanceStep>().danceStepSORef;
+        dancer.runtimeAnimatorController = danceStepSORef.animatorController;
     }
 
     private IEnumerator WaitToChangeCirclePointToDefaultSprite()
