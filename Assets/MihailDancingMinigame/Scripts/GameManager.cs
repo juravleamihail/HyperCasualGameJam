@@ -193,11 +193,13 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
                     {
                         soundsManagerAudioSrc.PlayOneShot(perfectSounds[currentCombo - 1]);
                     }
+                    ScoreManager.Instance.AddScore(ScoreManager.HitType.PerfectHit);
                 }
                 else
                 {
                     soundsManagerAudioSrc.PlayOneShot(greatSound);
                     SpawnPopup("Great");
+                    ScoreManager.Instance.AddScore(ScoreManager.HitType.GreatHit);
                 }
 
                 levels[currentLevel].currentStepsAcquired++;
