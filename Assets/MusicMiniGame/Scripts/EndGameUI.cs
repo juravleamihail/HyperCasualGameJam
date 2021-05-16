@@ -15,10 +15,10 @@ public class EndGameUI : MonoBehaviour
     void Awake()
     {
         _encouragements = new Dictionary<ScoreManager.HitType, List<string>>();
-        _encouragements.Add(ScoreManager.HitType.GoodHit,new List<string>() {"Good!" });
-        _encouragements.Add(ScoreManager.HitType.GreatHit, new List<string>() { "Great!" });
+        _encouragements.Add(ScoreManager.HitType.GoodHit,new List<string>() {"Good!","Acceptable!","Satisfactory!" });
+        _encouragements.Add(ScoreManager.HitType.GreatHit, new List<string>() { "Great!","Exceptional!","Wooow!" });
         _encouragements.Add(ScoreManager.HitType.PerfectHit, new List<string>() { "Perfect!","Flawless!","Excellent!","Splendid!","Superb!","Out-of-this-world!" });
-        _encouragements.Add(ScoreManager.HitType.None, new List<string>() { "Try harder!", "Maybe next time" });
+        _encouragements.Add(ScoreManager.HitType.None, new List<string>() { "Try harder!", "Maybe next time!" });
 
         colors = new List<Color>() { Color.red, Color.green, Color.blue, Color.yellow, Color.magenta };
     }
