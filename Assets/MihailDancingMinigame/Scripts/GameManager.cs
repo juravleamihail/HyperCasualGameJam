@@ -9,6 +9,7 @@ public struct Level
     public DanceStepScriptableObject[] danceSteps;
     public DanceStepScriptableObject[] danceStepRequirements;
     public int currentStepsAcquired;
+    public int danceStepSpeed;
 }
 
 public class GameManager : SimpleSingletoneGeneric<GameManager>
@@ -120,7 +121,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         }
 
         var followTargetComp = danceStep.AddComponent<FollowTarget>();
-        followTargetComp.SelectTarget(GameManager.Instance.endPoint);
+        followTargetComp.SelectTarget(GameManager.Instance.endPoint, levels[currentLevel].danceStepSpeed);
         danceStep.transform.position = spawnPoint.position;
         danceStep.GetComponent<Image>().sprite = levels[currentLevel].danceSteps[currentStepIndex].icon;
         danceStep.GetComponent<DanceStep>().danceStepSORef = levels[currentLevel].danceSteps[currentStepIndex];
@@ -351,6 +352,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         canSpawnDanceSteps = true;
         currentStepIndex = 0;
         currentCombo = 0;
+        GetComponent<AudioSource>().Stop();
         InitLevel();
     }
 

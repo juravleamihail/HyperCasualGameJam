@@ -770,6 +770,38 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d12fd47353594df4192c98296f4c520e, type: 2}
     - {fileID: 11400000, guid: c25506041eaa66d41bc6eb10d2e82f34, type: 2}
     currentStepsAcquired: 0
+    danceStepSpeed: 40
+  - danceSteps:
+    - {fileID: 11400000, guid: d98953de1498e1f4c9fe7e7df04441ec, type: 2}
+    - {fileID: 11400000, guid: 5c79d7dfb7921ea4cb776f64d94230dc, type: 2}
+    - {fileID: 11400000, guid: d98953de1498e1f4c9fe7e7df04441ec, type: 2}
+    - {fileID: 11400000, guid: 5c79d7dfb7921ea4cb776f64d94230dc, type: 2}
+    - {fileID: 11400000, guid: c25506041eaa66d41bc6eb10d2e82f34, type: 2}
+    - {fileID: 11400000, guid: d12fd47353594df4192c98296f4c520e, type: 2}
+    - {fileID: 11400000, guid: ce1b4d5d620ad1c468fc794076c6170f, type: 2}
+    - {fileID: 11400000, guid: 4bece1820018c2943a56d7f7863a7966, type: 2}
+    - {fileID: 11400000, guid: 52bace93aae80684bb8a477d82f8501c, type: 2}
+    - {fileID: 11400000, guid: d98953de1498e1f4c9fe7e7df04441ec, type: 2}
+    - {fileID: 11400000, guid: e9f03788edaa3d140bac9a15b2200c90, type: 2}
+    - {fileID: 11400000, guid: c25506041eaa66d41bc6eb10d2e82f34, type: 2}
+    - {fileID: 11400000, guid: 5c79d7dfb7921ea4cb776f64d94230dc, type: 2}
+    - {fileID: 11400000, guid: c25506041eaa66d41bc6eb10d2e82f34, type: 2}
+    - {fileID: 11400000, guid: e9f03788edaa3d140bac9a15b2200c90, type: 2}
+    - {fileID: 11400000, guid: c25506041eaa66d41bc6eb10d2e82f34, type: 2}
+    - {fileID: 11400000, guid: ce1b4d5d620ad1c468fc794076c6170f, type: 2}
+    - {fileID: 11400000, guid: 4bece1820018c2943a56d7f7863a7966, type: 2}
+    - {fileID: 11400000, guid: d98953de1498e1f4c9fe7e7df04441ec, type: 2}
+    - {fileID: 11400000, guid: e9f03788edaa3d140bac9a15b2200c90, type: 2}
+    danceStepRequirements:
+    - {fileID: 11400000, guid: d98953de1498e1f4c9fe7e7df04441ec, type: 2}
+    - {fileID: 11400000, guid: ce1b4d5d620ad1c468fc794076c6170f, type: 2}
+    - {fileID: 11400000, guid: 5c79d7dfb7921ea4cb776f64d94230dc, type: 2}
+    - {fileID: 11400000, guid: e9f03788edaa3d140bac9a15b2200c90, type: 2}
+    - {fileID: 11400000, guid: 4bece1820018c2943a56d7f7863a7966, type: 2}
+    - {fileID: 11400000, guid: 52bace93aae80684bb8a477d82f8501c, type: 2}
+    - {fileID: 11400000, guid: d12fd47353594df4192c98296f4c520e, type: 2}
+    currentStepsAcquired: 0
+    danceStepSpeed: 70
   reloadButton: {fileID: 1780916148}
   congratsMessage: {fileID: 1585642451}
   finishLevelButtonsParent: {fileID: 713605112}
@@ -1909,7 +1941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1780916149
 RectTransform:
   m_ObjectHideFlags: 0
