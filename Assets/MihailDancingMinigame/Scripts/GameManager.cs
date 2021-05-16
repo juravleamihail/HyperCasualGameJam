@@ -93,10 +93,17 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
             StartCoroutine(WaitToChangeCirclePointToDefaultSprite());
 
             GameObject danceStepInsideTheCirlePoint = GetDanceStepInsideTheCirlePoint();
+
+            if(danceStepInsideTheCirlePoint.GetComponent<DanceStep>().isChecked)
+            {
+                return;
+            }
+
             if (danceStepInsideTheCirlePoint != null)
             {
                 Dance(danceStepInsideTheCirlePoint);
                 CheckDanceStepRequired(danceStepInsideTheCirlePoint.GetComponent<DanceStep>());
+                danceStepInsideTheCirlePoint.GetComponent<DanceStep>().isChecked = true;
                 return;
             }
         }
