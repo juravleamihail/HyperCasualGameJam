@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
 
     public float Score { get { return _score; } }
 
-
+    Din score
 
     public event Action<float> OnScoreUpdate = delegate { };
     private void Awake()
@@ -98,7 +98,7 @@ public class ScoreManager : MonoBehaviour
         return (_scoreByHitType[hitType] * percentage) / 100;
     }
 
-    public void EngGame()
+    public EndGameUI EngGame()
     {
         Canvas canvas = FindObjectOfType<Canvas>();
 
@@ -111,6 +111,8 @@ public class ScoreManager : MonoBehaviour
         rect.anchorMin = Vector2.one;
 
         endGame.EndGame(_score);
+
+        return endGame;
     }
 
 }
