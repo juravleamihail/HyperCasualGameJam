@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DrinksMinigame : MonoBehaviour
 {
@@ -37,21 +38,24 @@ public class DrinksMinigame : MonoBehaviour
                 if ((ingredientPosition.y < 5.0f && ingredientPosition.y > 2.0f) &&
                     (ingredientPosition.x < 2 && ingredientPosition.x > -2)) //up down yellow circle & left right yellow circle
                 {
-                    if (ingredientPosition.y < 4.0f && ingredientPosition.y > 3.0f &&
+                    if (ingredientPosition.y < 3.0f && ingredientPosition.y > 2.0f &&
                         (ingredientPosition.x < 1 && ingredientPosition.x > -1)) //up down green circle & left right green circle
                     {
+                        ScoreManager.Instance.AddScore(ScoreManager.HitType.PerfectHit);
                         //tempScore.text = "perfect";
                         sliced = true;
                     }
                     else
                     {
                         //tempScore.text = "great";
+                        ScoreManager.Instance.AddScore(ScoreManager.HitType.GreatHit);
                         sliced = true;
                     }
                 }
                 else
                 {
                     //tempScore.text = "good";
+                    ScoreManager.Instance.AddScore(ScoreManager.HitType.GoodHit);
                     sliced = true;
                 }
             }
@@ -95,5 +99,10 @@ public class DrinksMinigame : MonoBehaviour
     public void SetIngredient(GameObject newIngredient)
     {
         ingredientOnScreen = newIngredient;
+    }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene(0);
     }
 }

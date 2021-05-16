@@ -17,7 +17,7 @@ public class IngredientsSpawner : MonoBehaviour
     [SerializeField] private List<AudioClip> fruitSounds;
 
     private float[] startingX = {3.5f, -3.5f};
-    private float startingY = 3.5f;
+    private float startingY = 2.5f;
     private float baseMovementSpeed = 0.8f;
     private float movementSpeed = 0.8f;
 
