@@ -1,7 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+[System.Serializable]
+public struct Level
+{
+    public DanceStepScriptableObject[] danceSteps;
+    public DanceStepScriptableObject[] danceStepRequirements;
+    public int currentStepsAcquired;
+}
 
 public class GameManager : SimpleSingletoneGeneric<GameManager>
 {
@@ -11,14 +19,20 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     [SerializeField] private Transform danceStepParent;
     [SerializeField] private Canvas canvas;
     [SerializeField] private Vector2 spawnInterval;
-    [SerializeField] private DanceStepScriptableObject[] danceSteps;
     [SerializeField] private Image circlePoint;
     [SerializeField] private Sprite circlePointEmptySprite;
     [SerializeField] private Sprite circlePointFilledSprite;
     [SerializeField] private Animator dancer;
     [SerializeField] private Transform danceStepRequirementsParent;
-    [SerializeField] private DanceStepScriptableObject[] danceStepRequirements;
     [SerializeField] private Transform currentDanceStepsAcquiredParent;
+
+    [Header("Levels")]
+    [SerializeField] private Level[] levels;
+    [SerializeField] private GameObject reloadButton;
+    [SerializeField] private GameObject congratsMessage;
+    [SerializeField] private GameObject finishLevelButtonsParent;
+    private int currentLevel = 0;
+    private bool canSpawnDanceSteps = true;
 
     [Header("Music")]
     [SerializeField] private AudioClip[] audioClips;
@@ -38,6 +52,11 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        InitLevel();
+    }
+
+    private void InitLevel()
+    {
         InitMusic();
         InitDanceStepsRequirement();
         InitCurrentDanceSteps();
@@ -51,7 +70,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
 
     private void InitCurrentDanceSteps()
     {
-        currentDanceStepsAcquired = danceStepRequirements;
+        currentDanceStepsAcquired = levels[currentLevel].danceStepRequirements;
         foreach (Transform item in danceStepRequirementsParent.transform)
         {
             var gameObject = Instantiate(item, currentDanceStepsAcquiredParent);
@@ -61,7 +80,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
 
     private void InitDanceStepsRequirement()
     {
-        foreach (var item in danceStepRequirements)
+        foreach (var item in levels[currentLevel].danceStepRequirements)
         {
             var gameObject = Instantiate(danceStepPrefab, danceStepRequirementsParent);
             gameObject.GetComponent<Image>().sprite = item.icon;
@@ -75,18 +94,27 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         yield return new WaitForSeconds(GetRandomSpawnTime());
         SpawnDanceStep();
         currentStepIndex++;
-        StartCoroutine(WaitToSpawnDanceStep());
+
+        if(canSpawnDanceSteps)
+        {
+            StartCoroutine(WaitToSpawnDanceStep());
+        }
     }
 
     void SpawnDanceStep()
     {
+        if(!canSpawnDanceSteps)
+        {
+            return;
+        }
+
         GameObject danceStep = Instantiate(danceStepPrefab, danceStepParent);
         InitDanceStep(ref danceStep);
     }
 
     void InitDanceStep(ref GameObject danceStep)
     {
-        if(currentStepIndex >= danceSteps.Length)
+        if(currentStepIndex >= levels[currentLevel].danceSteps.Length)
         {
             currentStepIndex = 0;
         }
@@ -94,8 +122,8 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         var followTargetComp = danceStep.AddComponent<FollowTarget>();
         followTargetComp.SelectTarget(GameManager.Instance.endPoint);
         danceStep.transform.position = spawnPoint.position;
-        danceStep.GetComponent<Image>().sprite = danceSteps[currentStepIndex].icon;
-        danceStep.GetComponent<DanceStep>().danceStepSORef = danceSteps[currentStepIndex];
+        danceStep.GetComponent<Image>().sprite = levels[currentLevel].danceSteps[currentStepIndex].icon;
+        danceStep.GetComponent<DanceStep>().danceStepSORef = levels[currentLevel].danceSteps[currentStepIndex];
     }
 
     private float GetRandomSpawnTime()
@@ -171,30 +199,72 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
                     SpawnPopup("Great");
                 }
 
+                levels[currentLevel].currentStepsAcquired++;
+
+                if (LevelIsFinished())
+                {
+                    currentLevel++;
+
+                    if (IsGameFinished())
+                    {
+                        reloadButton.SetActive(true);
+                    }
+
+                    canSpawnDanceSteps = false;
+                    StartCoroutine(WaitToShowLevelDone());
+                }
+
                 return;
             }
         }
     }
 
-    void PlayComboSound(int combo)
+    private void CleanLevel()
     {
-        switch (combo)
-        {
-            case 1:
-                soundsManagerAudioSrc.PlayOneShot(perfectSounds[combo-1]);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
+        DestroyAllChildsFromParent(danceStepRequirementsParent);
+        DestroyAllChildsFromParent(danceStepParent);
+        DestroyAllChildsFromParent(currentDanceStepsAcquiredParent);
+    }
 
-            default:
-                break;
+    private void DestroyAllChildsFromParent(Transform parent)
+    {
+        foreach (Transform item in parent)
+        {
+            Destroy(item.gameObject);
         }
+    }
+
+    private IEnumerator WaitToShowLevelDone()
+    {
+        yield return new WaitForSeconds(2);
+        ShowLevelDone();
+        CleanLevel();
+    }
+
+    private void ShowLevelDone()
+    {
+        congratsMessage.SetActive(true);
+        finishLevelButtonsParent.SetActive(true);
+    }
+
+    private bool IsGameFinished()
+    {
+        if(currentLevel >= levels.Length)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool LevelIsFinished()
+    {
+        if (levels[currentLevel].currentStepsAcquired >= levels[currentLevel].danceStepRequirements.Length)
+        {
+            return true;
+        }
+
+        return false;
     }
     
     void SpawnPopup(string message)
@@ -258,5 +328,34 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     {
         Time.timeScale = 1;
         GetComponent<AudioSource>().UnPause();
+    }
+
+    public void NextTap()
+    {
+        if(IsGameFinished())
+        {
+            // we move the scene in todo
+            Application.Quit();
+        }
+        else
+        {
+            NextLevel();
+        }
+    }
+
+    private void NextLevel()
+    {
+        reloadButton.SetActive(false);
+        congratsMessage.SetActive(false);
+        finishLevelButtonsParent.SetActive(false);
+        canSpawnDanceSteps = true;
+        currentStepIndex = 0;
+        currentCombo = 0;
+        InitLevel();
+    }
+
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
