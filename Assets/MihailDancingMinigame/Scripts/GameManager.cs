@@ -335,8 +335,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     {
         if(IsGameFinished())
         {
-            // we move the scene in todo
-            Application.Quit();
+            SceneManager.LoadScene("MainMenu");
         }
         else
         {
