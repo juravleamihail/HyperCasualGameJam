@@ -427,7 +427,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -57, y: -65.73399}
+  m_AnchoredPosition: {x: -57, y: -65.73401}
   m_SizeDelta: {x: 100, y: -131.467}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &404808779
@@ -494,7 +494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57.112015, y: -65.73399}
+  m_AnchoredPosition: {x: 57.11206, y: -65.73401}
   m_SizeDelta: {x: 85.776, y: -131.467}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &522149625
@@ -558,7 +558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 38.59999, y: -32}
+  m_AnchoredPosition: {x: 38.599976, y: -32}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &554369912
@@ -807,7 +807,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 52bace93aae80684bb8a477d82f8501c, type: 2}
     - {fileID: 11400000, guid: d12fd47353594df4192c98296f4c520e, type: 2}
     currentStepsAcquired: 0
-    danceStepSpeed: 70
+    danceStepSpeed: 60
   reloadButton: {fileID: 1780916148}
   congratsMessage: {fileID: 1585642451}
   finishLevelButtonsParent: {fileID: 713605112}
@@ -954,6 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ff3177c448c0e40a5ba93f3406bdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _endGamePrefab: {fileID: 0}
 --- !u!1001 &696444962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1095,7 +1096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1390108238840859741, guid: 40933d421c6c0624a9d920c62a048572, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -64.509
+      value: -64.50903
       objectReference: {fileID: 0}
     - target: {fileID: 1390108238840859741, guid: 40933d421c6c0624a9d920c62a048572, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -24,7 +24,7 @@ public class FollowTarget : MonoBehaviour
             return;
         }
 
-        if (Vector2.Distance(transform.position, target.position) > 1)
+        if (Vector2.Distance(transform.position, target.position) > 3)
         {
             Vector3 newPos = Vector2.MoveTowards(transform.position,
                 target.position, speed * Time.deltaTime);
