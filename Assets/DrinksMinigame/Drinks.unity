@@ -974,6 +974,15 @@ MonoBehaviour:
   - {fileID: 267630794}
   - {fileID: 56922802}
   - {fileID: 1531472726}
+  ingredientHalves:
+  - {fileID: 5861767279255372411, guid: 9fabb96c1d79c8e479a335190f0a491d, type: 3}
+  - {fileID: 5861767279255372411, guid: fd1e13a1ca0fbb4449fb3fce57b32780, type: 3}
+  - {fileID: 4694938834679524278, guid: f24ce77bcb4f3804abcb328261b17bf3, type: 3}
+  - {fileID: 4694938834679524278, guid: 729e0a968355e1b48a81e509402dc03d, type: 3}
+  - {fileID: 1359147976924459013, guid: 1047a7e395fd3ec478e17c7647b63f4b, type: 3}
+  - {fileID: 1359147976924459013, guid: 478a517de172561418c3fbdfd6203bc7, type: 3}
+  - {fileID: 7865662491721668110, guid: 5971706ab62120141a3cee4e7eabb621, type: 3}
+  - {fileID: 7865662491721668110, guid: 84e32e95f49fcad4ea0df4a1f912d2db, type: 3}
   minigame: {fileID: 1657779441}
   fruitSounds:
   - {fileID: 8300000, guid: d0bf78a2cea3d5145a42acf326e787aa, type: 3}
