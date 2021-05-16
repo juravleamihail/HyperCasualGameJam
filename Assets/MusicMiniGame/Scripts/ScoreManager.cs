@@ -9,6 +9,8 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance { get; private set; }
     public enum HitType{ None=0, GoodHit=1,GreatHit=2,PerfectHit=3};
 
+    [SerializeField] EndGameUI _endGamePrefab;
+
     private Dictionary<HitType, float> _scoreByHitType;
 
     private List<HitType> _hitHistory;
@@ -16,6 +18,8 @@ public class ScoreManager : MonoBehaviour
     private float _score;
 
     public float Score { get { return _score; } }
+
+
 
     public event Action<float> OnScoreUpdate = delegate { };
     private void Awake()
@@ -40,7 +44,7 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-    /*  IEnumerator Start()
+     IEnumerator Start()
       {
           yield return new WaitForSeconds(1);
           //AddScore(HitType.GoodHit); AddScore(HitType.GoodHit); AddScore(HitType.GoodHit);
@@ -57,8 +61,8 @@ public class ScoreManager : MonoBehaviour
           AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit);
           AddScore(HitType.PerfectHit);
           AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit);
-         
-} */
+        EngGame(); 
+} 
 
     public void AddScore(HitType hitType)
     {
@@ -92,6 +96,21 @@ public class ScoreManager : MonoBehaviour
         float percentage = 5 * Mathf.Clamp(combo-1,0,int.MaxValue);
 
         return (_scoreByHitType[hitType] * percentage) / 100;
+    }
+
+    public void EngGame()
+    {
+        Canvas canvas = FindObjectOfType<Canvas>();
+
+        EndGameUI endGame = Instantiate<EndGameUI>(_endGamePrefab);
+        RectTransform rect = endGame.GetComponent<RectTransform>();
+
+        rect.transform.parent = canvas.transform;
+        rect.localScale = Vector3.one;
+        rect.anchorMax = Vector2.one;
+        rect.anchorMin = Vector2.one;
+
+        endGame.EndGame(_score);
     }
 
 }
