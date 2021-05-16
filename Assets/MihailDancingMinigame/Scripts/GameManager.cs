@@ -126,14 +126,12 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     {
         danceStepAquired.isActivated = true;
         FollowAnimationToDanceStepAquired(danceStepAquired.transform, danceStepInsideCircle.transform);
-        //danceStepAquired.GetComponent<Image>().enabled = true;
     }
 
     private void FollowAnimationToDanceStepAquired(Transform target, Transform danceStepInsideCircle)
     {
-        target.GetComponent<Image>().enabled = true;
         var followTargetComp = danceStepInsideCircle.gameObject.GetComponent<FollowTarget>();
-        followTargetComp.SelectTarget(target, 200);
+        followTargetComp.SelectTarget(target, 200, true);
     }
 
     void Dance(GameObject gameObject)

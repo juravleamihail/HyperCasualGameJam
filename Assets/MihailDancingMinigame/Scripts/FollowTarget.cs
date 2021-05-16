@@ -1,16 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FollowTarget : MonoBehaviour
 {
     [SerializeField] private float speed = 1;
     private Transform target;
     bool canStart = false;
+    bool enableTargetSprite = false;
 
-    public void SelectTarget(Transform Target, float newSpeed = 50)
+    public void SelectTarget(Transform Target, float newSpeed = 50, bool EnableTargetSprite = false)
     {
         target = Target;
         canStart = true;
         speed = newSpeed;
+        enableTargetSprite = EnableTargetSprite;
     }
 
     // Update is called once per frame
@@ -29,6 +32,11 @@ public class FollowTarget : MonoBehaviour
         }
         else
         {
+            if(enableTargetSprite)
+            {
+                target.GetComponent<Image>().enabled = true;
+            }
+
             Destroy(this.gameObject);
         }
     }
