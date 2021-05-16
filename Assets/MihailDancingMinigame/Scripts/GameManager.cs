@@ -16,13 +16,40 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     [SerializeField] private Sprite circlePointEmptySprite;
     [SerializeField] private Sprite circlePointFilledSprite;
     [SerializeField] private Animator dancer;
+    [SerializeField] private Transform danceStepRequirementsParent;
+    [SerializeField] private DanceStepScriptableObject[] danceStepRequirements;
+    [SerializeField] private Transform currentDanceStepsAcquiredParent;
+    private DanceStepScriptableObject[] currentDanceStepsAcquired;
     private int currentStepIndex = 0;
 
     protected override void Awake()
     {
         base.Awake();
         SpawnDanceStep();
+        InitDanceStepsRequirement();
+        InitCurrentDanceSteps();
         StartCoroutine(WaitToSpawnDanceStep());
+    }
+
+    private void InitCurrentDanceSteps()
+    {
+        currentDanceStepsAcquired = danceStepRequirements;
+        foreach (Transform item in danceStepRequirementsParent.transform)
+        {
+            var gameObject = Instantiate(item, currentDanceStepsAcquiredParent);
+            gameObject.GetComponent<Image>().enabled = false;
+        }
+    }
+
+    private void InitDanceStepsRequirement()
+    {
+        foreach (var item in danceStepRequirements)
+        {
+            var gameObject = Instantiate(danceStepPrefab, danceStepRequirementsParent);
+            gameObject.GetComponent<Image>().sprite = item.icon;
+            gameObject.GetComponent<DanceStep>().danceStepSORef = item;
+            Destroy(gameObject.GetComponent<FollowTarget>());
+        }
     }
 
     IEnumerator WaitToSpawnDanceStep()
@@ -46,6 +73,8 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
             currentStepIndex = 0;
         }
 
+        var followTargetComp = danceStep.AddComponent<FollowTarget>();
+        followTargetComp.SelectTarget(GameManager.Instance.endPoint);
         danceStep.transform.position = spawnPoint.position;
         danceStep.GetComponent<Image>().sprite = danceSteps[currentStepIndex].icon;
         danceStep.GetComponent<DanceStep>().danceStepSORef = danceSteps[currentStepIndex];
@@ -61,10 +90,42 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         // Input for PC and mobile
         if(Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         {
-            Dance(GetDanceStepAroundTheCirlePoint());
+            GameObject danceStepInsideTheCirlePoint = GetDanceStepInsideTheCirlePoint();
+            if(danceStepInsideTheCirlePoint != null)
+            {
+                Dance(danceStepInsideTheCirlePoint);
+                CheckDanceStepRequired(danceStepInsideTheCirlePoint.GetComponent<DanceStep>());
+            }
             circlePoint.sprite = circlePointFilledSprite;
             StartCoroutine(WaitToChangeCirclePointToDefaultSprite());
         }
+    }
+
+    private void CheckDanceStepRequired(DanceStep danceStepInsideCirlePoint)
+    {
+        foreach (Transform item in currentDanceStepsAcquiredParent.transform)
+        {
+            DanceStep danceStep = item.GetComponent<DanceStep>();
+            if(!danceStep.isActivated && danceStepInsideCirlePoint.danceStepSORef == danceStep.danceStepSORef)
+            {
+                AccomplishStepDance(danceStep, danceStepInsideCirlePoint.gameObject);
+                return;
+            }
+        }
+    }
+
+    private void AccomplishStepDance(DanceStep danceStepAquired, GameObject danceStepInsideCircle)
+    {
+        danceStepAquired.isActivated = true;
+        FollowAnimationToDanceStepAquired(danceStepAquired.transform, danceStepInsideCircle.transform);
+        //danceStepAquired.GetComponent<Image>().enabled = true;
+    }
+
+    private void FollowAnimationToDanceStepAquired(Transform target, Transform danceStepInsideCircle)
+    {
+        target.GetComponent<Image>().enabled = true;
+        var followTargetComp = danceStepInsideCircle.gameObject.GetComponent<FollowTarget>();
+        followTargetComp.SelectTarget(target, 100);
     }
 
     void Dance(GameObject gameObject)
@@ -79,7 +140,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         circlePoint.sprite = circlePointEmptySprite;
     }
 
-    private GameObject GetDanceStepAroundTheCirlePoint()
+    private GameObject GetDanceStepInsideTheCirlePoint()
     {
         foreach (Transform danceStep in danceStepParent)
         {
