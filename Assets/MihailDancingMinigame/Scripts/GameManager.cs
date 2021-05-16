@@ -19,15 +19,34 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     [SerializeField] private Transform danceStepRequirementsParent;
     [SerializeField] private DanceStepScriptableObject[] danceStepRequirements;
     [SerializeField] private Transform currentDanceStepsAcquiredParent;
+
+    [Header("Music")]
+    [SerializeField] private AudioClip[] audioClips;
     private DanceStepScriptableObject[] currentDanceStepsAcquired;
+
+    [Header("Popup")]
+    [SerializeField] private GameObject popupPrefab;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioSource soundsManagerAudioSrc;
+    [SerializeField] private AudioClip greatSound;
+    [SerializeField] private AudioClip[] perfectSounds;
+    public Transform popupEndPoint;
     private int currentStepIndex = 0;
+    private int currentCombo = 0;
 
     protected override void Awake()
     {
         base.Awake();
+        InitMusic();
         InitDanceStepsRequirement();
         InitCurrentDanceSteps();
         StartCoroutine(WaitToSpawnDanceStep());
+    }
+
+    private void InitMusic()
+    {
+        GetComponent<AudioSource>()?.PlayOneShot(audioClips[Random.Range(0, audioClips.Length - 1)]);
     }
 
     private void InitCurrentDanceSteps()
@@ -94,7 +113,12 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
 
             GameObject danceStepInsideTheCirlePoint = GetDanceStepInsideTheCirlePoint();
 
-            if(danceStepInsideTheCirlePoint.GetComponent<DanceStep>().isChecked)
+            if(danceStepInsideTheCirlePoint == null)
+            {
+                return;
+            }
+
+            if (danceStepInsideTheCirlePoint.GetComponent<DanceStep>().isChecked)
             {
                 return;
             }
@@ -111,15 +135,72 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
 
     private void CheckDanceStepRequired(DanceStep danceStepInsideCirlePoint)
     {
+        bool isPerfect = true;
+
         foreach (Transform item in currentDanceStepsAcquiredParent.transform)
         {
             DanceStep danceStep = item.GetComponent<DanceStep>();
-            if(!danceStep.isActivated && danceStepInsideCirlePoint.danceStepSORef == danceStep.danceStepSORef)
+
+            if (!danceStep.isActivated && danceStepInsideCirlePoint.danceStepSORef != danceStep.danceStepSORef)
+            {
+                isPerfect = false;
+                currentCombo = 0;
+            }
+
+            if (!danceStep.isActivated && danceStepInsideCirlePoint.danceStepSORef == danceStep.danceStepSORef)
             {
                 AccomplishStepDance(danceStep, danceStepInsideCirlePoint.gameObject);
+
+                if(isPerfect)
+                {
+                    currentCombo++;
+                    SpawnPopup("Perfect X" + currentCombo);
+
+                    if(currentCombo >= perfectSounds.Length)
+                    {
+                        soundsManagerAudioSrc.PlayOneShot(perfectSounds[perfectSounds.Length - 1]);
+                    }
+                    else
+                    {
+                        soundsManagerAudioSrc.PlayOneShot(perfectSounds[currentCombo - 1]);
+                    }
+                }
+                else
+                {
+                    soundsManagerAudioSrc.PlayOneShot(greatSound);
+                    SpawnPopup("Great");
+                }
+
                 return;
             }
         }
+    }
+
+    void PlayComboSound(int combo)
+    {
+        switch (combo)
+        {
+            case 1:
+                soundsManagerAudioSrc.PlayOneShot(perfectSounds[combo-1]);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+
+            default:
+                break;
+        }
+    }
+    
+    void SpawnPopup(string message)
+    {
+        var popup = Instantiate(popupPrefab, canvas.transform);
+        popup.GetComponent<Popup>().Init(message);
     }
 
     private void AccomplishStepDance(DanceStep danceStepAquired, GameObject danceStepInsideCircle)
@@ -165,5 +246,17 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         Rect rect2 = new Rect(rectTrans2.localPosition.x, rectTrans2.localPosition.y, rectTrans2.rect.width, rectTrans2.rect.height);
 
         return rect1.Overlaps(rect2);
+    }
+
+    public void PauseTap()
+    {
+        Time.timeScale = 0;
+        GetComponent<AudioSource>().Pause();
+    }
+
+    public void UnpauseTap()
+    {
+        Time.timeScale = 1;
+        GetComponent<AudioSource>().UnPause();
     }
 }
