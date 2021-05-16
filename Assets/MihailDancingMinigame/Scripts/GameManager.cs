@@ -89,14 +89,16 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
         // Input for PC and mobile
         if(Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         {
+            circlePoint.sprite = circlePointFilledSprite;
+            StartCoroutine(WaitToChangeCirclePointToDefaultSprite());
+
             GameObject danceStepInsideTheCirlePoint = GetDanceStepInsideTheCirlePoint();
-            if(danceStepInsideTheCirlePoint != null)
+            if (danceStepInsideTheCirlePoint != null)
             {
                 Dance(danceStepInsideTheCirlePoint);
                 CheckDanceStepRequired(danceStepInsideTheCirlePoint.GetComponent<DanceStep>());
+                return;
             }
-            circlePoint.sprite = circlePointFilledSprite;
-            StartCoroutine(WaitToChangeCirclePointToDefaultSprite());
         }
     }
 
@@ -124,7 +126,7 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     {
         target.GetComponent<Image>().enabled = true;
         var followTargetComp = danceStepInsideCircle.gameObject.GetComponent<FollowTarget>();
-        followTargetComp.SelectTarget(target, 100);
+        followTargetComp.SelectTarget(target, 200);
     }
 
     void Dance(GameObject gameObject)
