@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/MainMenu/MainMenu.unity
+    guid: 30a8be3e33f817247adf2f50da3ab93b
+  - enabled: 1
+    path: Assets/DrinksMinigame/Drinks.unity
+    guid: 7815ab139deb477479d9af71c9199d1b
+  - enabled: 1
+    path: Assets/MihailDancingMinigame/Dancing.unity
+    guid: b6e278ddb6d9da4409a6d5905eed2767
+  - enabled: 1
+    path: Assets/MusicMiniGame/Scenes/MusicGame.unity
+    guid: b11fac5428d6b92499f4eb08bebde9b3
   m_configObjects: {}

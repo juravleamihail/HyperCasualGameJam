@@ -11,13 +11,15 @@ public class IngredientsSpawner : MonoBehaviour
     [SerializeField] private List<int> requirementQuantities;
     [SerializeField] private List<TextMesh> requirementTable;
 
+    [SerializeField] private List<GameObject> ingredientHalves;
+
     [SerializeField] private DrinksMinigame minigame;
     [SerializeField] private List<AudioClip> fruitSounds;
 
     private float[] startingX = {3.5f, -3.5f};
-    private float startingY = 3.5f;
-    private float baseMovementSpeed = 1f;
-    private float movementSpeed = 1f;
+    private float startingY = 2.5f;
+    private float baseMovementSpeed = 0.8f;
+    private float movementSpeed = 0.8f;
 
     GameObject newIngredient;
     int randomPositionValue = 0;
@@ -72,6 +74,7 @@ public class IngredientsSpawner : MonoBehaviour
         RefreshRequirementTable();
         attachedAudioSource.clip = fruitSounds[Random.Range(0, fruitSounds.Count)];
         attachedAudioSource.Play();
+        StartCoroutine(IngredientHalvesMovement(lastIndex, newIngredient.transform.position));
         Destroy(newIngredient);
         minigame.SetIngredient(null);
     }
@@ -79,5 +82,22 @@ public class IngredientsSpawner : MonoBehaviour
     public int GetRemainingIngredientCount()
     {
         return requirementQuantities.Sum();
+    }
+
+    IEnumerator IngredientHalvesMovement(int fruitIndex, Vector3 postionOfCut)
+    {
+        GameObject rightHalf =
+            Instantiate(ingredientHalves[fruitIndex * 2],
+                new Vector3(postionOfCut.x + 0.5f, postionOfCut.y, 0.0f), Quaternion.identity);
+        
+        GameObject leftHalf =
+            Instantiate(ingredientHalves[fruitIndex * 2 + 1],
+                new Vector3(postionOfCut.x - 0.5f, postionOfCut.y, 0.0f), Quaternion.identity);
+        
+        yield return new WaitForSeconds(0.5f);
+
+        Destroy(rightHalf);
+        Destroy(leftHalf);
+
     }
 }
