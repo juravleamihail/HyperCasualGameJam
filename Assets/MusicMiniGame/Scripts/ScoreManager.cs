@@ -44,7 +44,7 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-     IEnumerator Start()
+    /* IEnumerator Start()
       {
           yield return new WaitForSeconds(1);
           //AddScore(HitType.GoodHit); AddScore(HitType.GoodHit); AddScore(HitType.GoodHit);
@@ -62,7 +62,7 @@ public class ScoreManager : MonoBehaviour
           AddScore(HitType.PerfectHit);
           AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit); AddScore(HitType.PerfectHit);
         EngGame(); 
-} 
+} */
 
     public void AddScore(HitType hitType)
     {
