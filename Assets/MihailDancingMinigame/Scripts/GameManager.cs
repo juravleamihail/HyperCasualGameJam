@@ -25,7 +25,6 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        SpawnDanceStep();
         InitDanceStepsRequirement();
         InitCurrentDanceSteps();
         StartCoroutine(WaitToSpawnDanceStep());
