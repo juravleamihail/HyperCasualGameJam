@@ -113,7 +113,12 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
 
             GameObject danceStepInsideTheCirlePoint = GetDanceStepInsideTheCirlePoint();
 
-            if(danceStepInsideTheCirlePoint.GetComponent<DanceStep>().isChecked)
+            if(danceStepInsideTheCirlePoint == null)
+            {
+                return;
+            }
+
+            if (danceStepInsideTheCirlePoint.GetComponent<DanceStep>().isChecked)
             {
                 return;
             }
