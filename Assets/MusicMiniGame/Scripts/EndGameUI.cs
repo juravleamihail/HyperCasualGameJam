@@ -18,7 +18,7 @@ public class EndGameUI : MonoBehaviour
         _encouragements.Add(ScoreManager.HitType.GoodHit,new List<string>() {"Good!","Acceptable!","Satisfactory!" });
         _encouragements.Add(ScoreManager.HitType.GreatHit, new List<string>() { "Great!","Exceptional!","Wooow!" });
         _encouragements.Add(ScoreManager.HitType.PerfectHit, new List<string>() { "Perfect!","Flawless!","Excellent!","Splendid!","Superb!","Out-of-this-world!" });
-        _encouragements.Add(ScoreManager.HitType.None, new List<string>() { "Try harder!", "Maybe next time!" });
+        _encouragements.Add(ScoreManager.HitType.None, new List<string>() { "Try harder!", "Maybe next time!", "You can do it!" });
 
         colors = new List<Color>() { Color.red, Color.green, Color.blue, Color.yellow, Color.magenta };
     }
