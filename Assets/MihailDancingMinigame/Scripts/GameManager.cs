@@ -19,15 +19,24 @@ public class GameManager : SimpleSingletoneGeneric<GameManager>
     [SerializeField] private Transform danceStepRequirementsParent;
     [SerializeField] private DanceStepScriptableObject[] danceStepRequirements;
     [SerializeField] private Transform currentDanceStepsAcquiredParent;
+
+    [Header("Music")]
+    [SerializeField] private AudioClip[] audioClips;
     private DanceStepScriptableObject[] currentDanceStepsAcquired;
     private int currentStepIndex = 0;
 
     protected override void Awake()
     {
         base.Awake();
+        InitMusic();
         InitDanceStepsRequirement();
         InitCurrentDanceSteps();
         StartCoroutine(WaitToSpawnDanceStep());
+    }
+
+    private void InitMusic()
+    {
+        GetComponent<AudioSource>().PlayOneShot(audioClips[Random.Range(0, audioClips.Length - 1)]);
     }
 
     private void InitCurrentDanceSteps()
