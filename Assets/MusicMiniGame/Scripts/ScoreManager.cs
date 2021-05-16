@@ -19,8 +19,6 @@ public class ScoreManager : MonoBehaviour
 
     public float Score { get { return _score; } }
 
-    Din score
-
     public event Action<float> OnScoreUpdate = delegate { };
     private void Awake()
     {
